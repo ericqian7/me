@@ -20,6 +20,16 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         input: {
           main: './index.html'
+        },
+        output: {
+          assetFileNames: (assetInfo) => {
+            // Keep PDF files without hash
+            if (assetInfo.name && assetInfo.name.endsWith('.pdf')) {
+              return 'assets/[name][extname]';
+            }
+            // Add hash to other assets
+            return 'assets/[name]-[hash][extname]';
+          }
         }
       },
       assetsInclude: ['**/*.pdf']
